@@ -1,0 +1,9 @@
+net: "dqn.prototxt"
+solver_type: ADADELTA
+momentum: 0.9
+base_lr: 0.1
+lr_policy: "step"
+gamma: 0.1
+stepsize: 100000
+max_iter: 1000000
+display: 1000
