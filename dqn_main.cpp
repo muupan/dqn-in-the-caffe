@@ -6,7 +6,7 @@
 #include "prettyprint.hpp"
 #include "dqn.hpp"
 
-DEFINE_bool(gpu, false, "Use GPU to brew Caffe");
+DEFINE_int32(gpu, -1, "Use GPU to brew Caffe on given device ID.");
 DEFINE_bool(gui, false, "Open a GUI window");
 DEFINE_string(rom, "breakout.bin", "Atari 2600 ROM to play");
 DEFINE_string(solver, "dqn_solver.prototxt", "Solver parameter file (*.prototxt)");
@@ -98,7 +98,9 @@ int main(int argc, char** argv) {
   google::InstallFailureSignalHandler();
   google::LogToStderr();
 
-  if (FLAGS_gpu) {
+  if (FLAGS_gpu >= 0) {
+    LOG(INFO) << "Use GPU with device ID " << FLAGS_gpu;
+    caffe::Caffe::SetDevice(FLAGS_gpu);
     caffe::Caffe::set_mode(caffe::Caffe::GPU);
   } else {
     caffe::Caffe::set_mode(caffe::Caffe::CPU);
